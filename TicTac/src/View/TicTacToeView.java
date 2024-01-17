@@ -8,12 +8,14 @@ package View;
  *
  * @author 20115
  */
-import Controller.GameController;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+import javax.imageio.ImageIO;
 
 public class TicTacToeView extends JFrame {
     private JButton[][] buttons;
@@ -52,30 +54,36 @@ public class TicTacToeView extends JFrame {
                 // Customize layout to center the image in the button
                 buttons[i][j].setHorizontalTextPosition(JButton.CENTER);
                 buttons[i][j].setVerticalTextPosition(JButton.CENTER);
-                buttons[i][j].setBorderPainted(true); 
+                buttons[i][j].setBorderPainted(true);
 
                 buttons[i][j].addActionListener(new ButtonClickListener(i, j));
             }
         }
     }
 
-  public void updateButton(int row, int col, char symbol) {
-    // Load and set the image based on the user's move
-    String imagePath = (symbol == 'X') ? "X.png" : "O.png";
-    ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
+    public void updateButton(int row, int col, char symbol) {
+        // Load and set the image based on the user's move
+        String imagePath = (symbol == 'X') ? "X.png" : "O.png";
 
-    double scalingFactor = 0.5;
-    Image scaledImage = icon.getImage().getScaledInstance(
-            (int) (buttons[row][col].getWidth() * scalingFactor),
-            (int) (buttons[row][col].getHeight() * scalingFactor),
-            Image.SCALE_SMOOTH
-    );
-    icon = new ImageIcon(scaledImage);
+        try {
+            URL imageUrl = getClass().getResource(imagePath);
+            if (imageUrl != null) {
+                BufferedImage image = ImageIO.read(imageUrl);
+                Image scaledImage = image.getScaledInstance(
+                        buttons[row][col].getWidth(),
+                        buttons[row][col].getHeight(),
+                        Image.SCALE_SMOOTH
+                );
 
-    buttons[row][col].setIcon(icon);
-    buttons[row][col].setEnabled(false); // Disable the button after being clicked
-}
-
+                buttons[row][col].setIcon(new ImageIcon(scaledImage));
+                buttons[row][col].setEnabled(false); // Disable the button after being clicked
+            } else {
+                System.err.println("Image not found: " + imagePath);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     private class ButtonClickListener implements ActionListener {
         private int row;
@@ -88,7 +96,6 @@ public class TicTacToeView extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
             updateButton(row, col, 'O');
         }
     }
