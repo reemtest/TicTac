@@ -10,9 +10,14 @@ package Model;
  */
 public class X {
      private String  shape;
-
+     private int position;
+     
     public String getShape() {
         return shape;
+    }
+
+    public int getPosition() {
+        return position;
     }
      
      
