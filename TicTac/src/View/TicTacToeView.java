@@ -100,7 +100,7 @@ public class TicTacToeView extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new TicTacToeView());
-    }
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(() -> new TicTacToeView());
+//    }
 }
