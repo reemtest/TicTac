@@ -20,7 +20,7 @@ public class GameController {
         
           
        private GameController() {
-         CurrentPlayer = Player.X; //initizlizing the player of X
+         CurrentPlayer = Player.O; //initizlizing the player of O
        }
        
     
