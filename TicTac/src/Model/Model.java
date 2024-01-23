@@ -12,7 +12,22 @@ import java.util.Scanner;
  */
 public class Model {
     
+private char [][] Board;
 
+public Model()
+        {
+            Board= new char [3][3];
+            initializeBoard();
+        }
+
+   private void initializeBoard() {
+        // Initialize the board with empty spaces
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                Board[i][j] = ' ';
+            }
+        }
+    }
   
     public void playTwoPlayers()
     {   
@@ -20,13 +35,13 @@ public class Model {
         
     }
     
-    public void playWithComputer()
+   /* public void playWithComputer()
     {
     
     
     
     }
-    
+    */
     
     
     
