@@ -31,6 +31,8 @@ public class TicTacToeView extends JFrame implements Observer {
 
     private JButton[][] buttons;
 
+    private Player player1Symbol;
+    private Player player2Symbol;
 
     public TicTacToeView() {
 
@@ -44,6 +46,7 @@ public class TicTacToeView extends JFrame implements Observer {
         buttons = new JButton[3][3];
         initializeButtons();
 
+        initializePlayerSymbols();
         // Set layout manager
         setLayout(new GridLayout(3, 3));
 
@@ -58,6 +61,47 @@ public class TicTacToeView extends JFrame implements Observer {
 
 
     }
+
+    private void initializePlayerSymbols() {
+        // Use JOptionPane to prompt players for symbol selection
+        String[] options = {"X", "O"};
+
+        int player1Choice = JOptionPane.showOptionDialog(
+                this,
+                "Player 1, choose your symbol:",
+                "Symbol Selection",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]
+        );
+
+        int player2Choice;
+
+        do {
+            player2Choice = JOptionPane.showOptionDialog(
+                    this,
+                    "Player 2, choose your symbol:",
+                    "Symbol Selection",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[1]
+            );
+
+            if (player1Choice == player2Choice) {
+                JOptionPane.showMessageDialog(this, "Player 2 must choose a different symbol from Player 1.");
+            }
+
+        } while (player1Choice == player2Choice);
+
+        // Set player symbols based on user choices
+        player1Symbol = (player1Choice == 0) ? Player.X : Player.O;
+        player2Symbol = (player2Choice == 0) ? Player.X : Player.O;
+    }
+
 
 
     private void initializeButtons() {
@@ -144,7 +188,7 @@ public class TicTacToeView extends JFrame implements Observer {
             Player CurrentPlayer = GameController.getInstance().getCurrentPlayer(); //instantiation of the controller
 
             // Update the button with the current player's symbol
-            char symbol = (CurrentPlayer == Player.X) ? 'X' : 'O';
+            char symbol = (CurrentPlayer == Player.X) ? player1Symbol.getSymbol() : player2Symbol.getSymbol();
             updateButton(row, col, symbol);
 
             //Creating instance of Model to not access it directly

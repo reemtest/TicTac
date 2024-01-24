@@ -9,8 +9,18 @@ package Model;
  * @author LENOVO
  */
 public enum Player {
-    
-    X,
-    O,
+    X('X'),
+    O('O');
+
+    private char symbol;
+
+    Player(char symbol) {
+        this.symbol = symbol;
+    }
+
+    public char getSymbol() {
+        return symbol;
+    }
+
 
 }
