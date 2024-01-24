@@ -11,6 +11,7 @@ package View;
 import Controller.GameController;
 import Controller.GameStatus;
 
+import Controller.Observer;
 import Model.Model;
 import Model.Player;
 import javax.swing.*;
@@ -20,18 +21,16 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import javax.imageio.ImageIO;
 
-public class TicTacToeView extends JFrame  {
-    
+public class TicTacToeView extends JFrame implements Observer {
+
     private JButton[][] buttons;
-   
-    
-    
-    
-    
+
+
     public TicTacToeView() {
-      
+
         // Set up the JFrame
         super("Tic Tac Toe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,11 +52,11 @@ public class TicTacToeView extends JFrame  {
         }
 
         setVisible(true);
-         
-        
+
+
     }
 
-    
+
     private void initializeButtons() {
         // Create buttons and set ActionListener
         for (int i = 0; i < 3; i++) {
@@ -74,8 +73,22 @@ public class TicTacToeView extends JFrame  {
             }
         }
     }
-    
-    
+    @Override
+    public void update(char result, char[][] board) {
+
+        if (result == 'X') {
+            // Display a message or update UI for 'X' winning
+            System.out.println("Player X wins!");
+        } else if (result == 'O') {
+            // Display a message or update UI for 'O' winning
+            System.out.println("Player O wins!");
+        } else if (result == ' ' && GameStatus.isBoardFull(board)) {
+            // Display a message or update UI for a tie
+            System.out.println("It's a draw!");
+        }
+
+    }
+
 
     public void updateButton(int row, int col, char symbol) {
         // Load and set the image based on the user's move
@@ -110,8 +123,7 @@ public class TicTacToeView extends JFrame  {
 //        
 //    }
 //    
-    
-    
+
 
     private class ButtonClickListener implements ActionListener {
         private int row;
@@ -122,30 +134,61 @@ public class TicTacToeView extends JFrame  {
             this.col = col;
         }
 
+
         @Override
-      
+
         public void actionPerformed(ActionEvent e) {
- 
+
 // Get the current player from the GameController without accessing the model directly 
-        Player CurrentPlayer = GameController.getInstance().getCurrentPlayer(); //instantiation of the controller 
+            Player CurrentPlayer = GameController.getInstance().getCurrentPlayer(); //instantiation of the controller
 
-        // Update the button with the current player's symbol
-        char symbol = (CurrentPlayer == Player.X) ? 'X' : 'O';
-        updateButton(row, col, symbol);
+            // Update the button with the current player's symbol
+            char symbol = (CurrentPlayer == Player.X) ? 'X' : 'O';
+            updateButton(row, col, symbol);
 
-        //Creating instance of Model to not access it directly
-        Model.getInstance().playTwoPlayers(row, col, symbol);
-        
-        // Switch players' turns in the GameController without accessing the model directly 
-        GameController.getInstance().SwitchPlayersTurns();
-        
-        //Get Results of the game
-        char result = Model.getInstance().checkForWinner();
-            char[][] board= Model.getInstance().getBoard();
-        GameStatus.handleMoveResult(result, null,  board      );
-        
+            //Creating instance of Model to not access it directly
+            Model.getInstance().playTwoPlayers(row, col, symbol);
+
+            // Switch players' turns in the GameController without accessing the model directly
+            GameController.getInstance().SwitchPlayersTurns();
+
+            //Get Results of the game
+            char result = Model.getInstance().checkForWinner();
+            char[][] board = Model.getInstance().getBoard();
+//            GameStatus.handleMoveResult(result, null, board);
+
+            GameStatus gameStatus = new GameStatus();
+
+            // Call handleMoveResult using the instance
+            gameStatus.handleMoveResult(result, TicTacToeView.this, board);
+//            if (!Model.getInstance().isGameOver()) {
+              // handleComputerMove();
+//            }
         }
-    }
+
+        private void handleComputerMove() {
+            Player currentPlayer = GameController.getInstance().getCurrentPlayer();
+
+            char computerSymbol = (currentPlayer == Player.X) ? 'O' : 'X';
+            Model.getInstance().playSinglePlayer(row, col, computerSymbol);
+
+            char[][] board = Model.getInstance().getBoard();
+
+            // Create an instance of GameStatus
+            GameStatus gameStatus = new GameStatus();
+
+            // Get the result after the computer move
+            char result = Model.getInstance().checkForWinner();
+
+            // Call handleMoveResult using the instance
+            gameStatus.handleMoveResult(result, TicTacToeView.this, board);
+
+            GameController.getInstance().SwitchPlayersTurns();
+        }
+
+
+
+
 
 //    public static void main(String[] args) {
 //        GameStatus subject=new GameStatus();
@@ -157,7 +200,9 @@ public class TicTacToeView extends JFrame  {
 //        subject.setEnd(b);
 //        
 //        
-        
-         
- // }
+
+
+        // }
+
+    }
 }

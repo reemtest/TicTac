@@ -4,7 +4,10 @@
  */
 package Model;
 
+import java.util.Random;
 import java.util.Scanner;
+
+import static Controller.GameStatus.isBoardFull;
 
 /**
  *
@@ -74,14 +77,36 @@ public Model()
 
         return ' '; // No winner yet
     }
-    
-  /*  public void playWithComputer()
-    {
-    
-    
-    
+
+    public void playSinglePlayer(int row, int col, char playerSymbol) {
+
+        if (Board[row][col] == ' ') {
+            // Human player's move
+            Board[row][col] = playerSymbol;
+
+
+            if (!isGameOver()) {
+
+                makeComputerMove(playerSymbol == 'X' ? 'O' : 'X');
+            }
+        }
     }
-    */
-    
+
+    public void makeComputerMove(char computerSymbol) {
+
+        Random random = new Random();
+        int computerRow, computerCol;
+        do {
+            computerRow = random.nextInt(3);
+            computerCol = random.nextInt(3);
+        } while (Board[computerRow][computerCol] != ' ');
+
+        Board[computerRow][computerCol] = computerSymbol;
+    }
+    public boolean isGameOver() {
+
+        return isBoardFull(Board) || checkForWinner() != ' ';
+    }
+
     
     }
