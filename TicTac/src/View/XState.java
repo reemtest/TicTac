@@ -4,16 +4,18 @@
  */
 package View;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author LENOVO
  */
 public class XState implements State {
     @Override
-    public void Symbolizing(Context context)
+    public void Symbolizing()
     {
     
-    
+     JOptionPane.showMessageDialog(null, "Player X wins!");
     
     }
 }

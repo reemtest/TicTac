@@ -8,7 +8,7 @@ package View;
  *
  * @author LENOVO
  */
-public class Context {
+public class Context implements State {
     private State state;
 
     public State getState() {
@@ -17,6 +17,11 @@ public class Context {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    @Override
+    public void Symbolizing() {
+        this.state.Symbolizing();
     }
     
     

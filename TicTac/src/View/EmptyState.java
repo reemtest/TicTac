@@ -4,15 +4,17 @@
  */
 package View;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author LENOVO
  */
 public class EmptyState implements State {
     @Override
-    public void Symbolizing(Context context)
+    public void Symbolizing()
     {
-    
+    JOptionPane.showMessageDialog(null, "It's a draw!");
     
     } 
 }

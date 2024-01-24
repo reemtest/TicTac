@@ -4,7 +4,12 @@
  */
 package Controller;
 
+import View.Context;
+import View.EmptyState;
+import View.OState;
+import View.State;
 import View.TicTacToeView;
+import View.XState;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,13 +19,23 @@ import javax.swing.JOptionPane;
 public class GameStatus {
     
     public static void handleMoveResult(char result, TicTacToeView view, char[][] board) {
+        Context c=new Context();
+        State x=new XState();
+        State o=new OState();
+        State empty=new EmptyState();
+        
         if (result == 'X') {
-            showResultMessage(view, "Player X wins!");
+            c.setState(x);
+            c.Symbolizing();  
+           // showResultMessage(view, "Player X wins!");
         } else if (result == 'O') {
-            showResultMessage(view, "Player O wins!");
+            c.setState(o);
+            c.Symbolizing(); 
+            //showResultMessage(view, "Player O wins!");
         } else if (result == ' ' && isBoardFull(board)) {
-            
-                showResultMessage(view, "It's a draw!");
+            c.setState(empty);
+            c.Symbolizing(); 
+            // showResultMessage(view, "It's a draw!");
             
         }
     }

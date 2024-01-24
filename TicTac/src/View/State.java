@@ -9,5 +9,5 @@ package View;
  * @author LENOVO
  */
 public interface State {
-    public void Symbolizing(Context context);
+    public void Symbolizing();
 }
