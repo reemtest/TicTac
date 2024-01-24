@@ -4,7 +4,9 @@
  */
 package View;
 
+import Controller.GameStatus;
 import Model.Player;
+
 
 /**
  *
@@ -12,8 +14,8 @@ import Model.Player;
  */
 public class GameMain {
     public static void main(String[] args) {
-         SingeltonMenu m = SingeltonMenu.getInstance();
-          m.setIsVisible(true); 
-               
+        SingeltonMenu m = SingeltonMenu.getInstance();
+        m.setIsVisible(true); 
+       
     }
 }

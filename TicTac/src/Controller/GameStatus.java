@@ -10,15 +10,19 @@ import View.OState;
 import View.State;
 import View.TicTacToeView;
 import View.XState;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author 20115
  */
-public class GameStatus {
+public class GameStatus  {
     
+   
     public static void handleMoveResult(char result, TicTacToeView view, char[][] board) {
+       
         Context c=new Context();
         State x=new XState();
         State o=new OState();
@@ -26,18 +30,22 @@ public class GameStatus {
         
         if (result == 'X') {
             c.setState(x);
-            c.Symbolizing();  
+            c.Symbolizing(); 
+           
            // showResultMessage(view, "Player X wins!");
         } else if (result == 'O') {
             c.setState(o);
             c.Symbolizing(); 
+           
             //showResultMessage(view, "Player O wins!");
         } else if (result == ' ' && isBoardFull(board)) {
             c.setState(empty);
             c.Symbolizing(); 
+           
             // showResultMessage(view, "It's a draw!");
             
         }
+
     }
     
     private static boolean isBoardFull(char [][] Board)
@@ -54,12 +62,19 @@ public class GameStatus {
         return true;
         }
     
+   
     
-        private static void showResultMessage(TicTacToeView view, String message) {
-        JOptionPane.showMessageDialog(view, message);
+//        private static void showResultMessage(TicTacToeView view, String message) {
+//        JOptionPane.showMessageDialog(view, message);
+//    }
+
+    
+   
+   
+    
     }
 
     
     
     
-}
+

@@ -10,6 +10,7 @@ package View;
  */
 import Controller.GameController;
 import Controller.GameStatus;
+
 import Model.Model;
 import Model.Player;
 import javax.swing.*;
@@ -21,9 +22,12 @@ import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 
-public class TicTacToeView extends JFrame {
+public class TicTacToeView extends JFrame  {
     
     private JButton[][] buttons;
+   
+    
+    
     
     
     public TicTacToeView() {
@@ -49,6 +53,8 @@ public class TicTacToeView extends JFrame {
         }
 
         setVisible(true);
+         
+        
     }
 
     
@@ -95,7 +101,15 @@ public class TicTacToeView extends JFrame {
             ex.printStackTrace();
         }
     }
-    
+
+//    @Override
+//    public void update() {
+//        
+//     
+//    JOptionPane.showMessageDialog(null, "The game ends!");
+//        
+//    }
+//    
     
     
 
@@ -134,6 +148,16 @@ public class TicTacToeView extends JFrame {
     }
 
 //    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> new TicTacToeView());
-//  }
+//        GameStatus subject=new GameStatus();
+//      
+//        SwingUtilities.invokeLater(() -> new TicTacToeView(subject));
+//        
+//        boolean b=subject.isEnd();
+//         
+//        subject.setEnd(b);
+//        
+//        
+        
+         
+ // }
 }
