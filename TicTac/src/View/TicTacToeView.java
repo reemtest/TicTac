@@ -9,6 +9,8 @@ package View;
  * @author 20115
  */
 import Controller.GameController;
+import Controller.GameStatus;
+import Model.Model;
 import Model.Player;
 import javax.swing.*;
 import java.awt.*;
@@ -20,8 +22,12 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 public class TicTacToeView extends JFrame {
+    
     private JButton[][] buttons;
+    
+    
     public TicTacToeView() {
+      
         // Set up the JFrame
         super("Tic Tac Toe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,6 +51,7 @@ public class TicTacToeView extends JFrame {
         setVisible(true);
     }
 
+    
     private void initializeButtons() {
         // Create buttons and set ActionListener
         for (int i = 0; i < 3; i++) {
@@ -102,16 +109,28 @@ public class TicTacToeView extends JFrame {
         }
 
         @Override
+      
         public void actionPerformed(ActionEvent e) {
- // Get the current player from the GameController without accessing the model directly 
-        Player currentPlayer = GameController.getInstance().getCurrentPlayer(); //instantiation of the controller 
+ 
+// Get the current player from the GameController without accessing the model directly 
+        Player CurrentPlayer = GameController.getInstance().getCurrentPlayer(); //instantiation of the controller 
 
         // Update the button with the current player's symbol
-        char symbol = (currentPlayer == Player.X) ? 'X' : 'O';
+        char symbol = (CurrentPlayer == Player.X) ? 'X' : 'O';
         updateButton(row, col, symbol);
 
+        //Creating instance of Model to not access it directly
+        Model.getInstance().playTwoPlayers(row, col, symbol);
+        
         // Switch players' turns in the GameController without accessing the model directly 
-        GameController.getInstance().SwitchPlayersTurns();        }
+        GameController.getInstance().SwitchPlayersTurns();
+        
+        //Get Results of the game
+        char result = Model.getInstance().checkForWinner();
+            char[][] board= Model.getInstance().getBoard();
+        GameStatus.handleMoveResult(result, null,  board      );
+        
+        }
     }
 
     public static void main(String[] args) {
